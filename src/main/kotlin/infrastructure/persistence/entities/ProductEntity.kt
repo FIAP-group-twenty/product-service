@@ -27,7 +27,7 @@ data class ProductEntity(
         if (name.isNullOrBlank()) throw ResourceBadRequestException("Name cannot be empty")
         if (category.isNullOrBlank()) throw ResourceBadRequestException("Category cannot be empty")
         if (description.isNullOrBlank()) throw ResourceBadRequestException("Description cannot be empty")
-        if (price.equals(0.0)) throw ResourceBadRequestException("Price cannot be 0")
+        if (price <= BigDecimal.ZERO) throw ResourceBadRequestException("Price cannot be 0")
     }
 
 }

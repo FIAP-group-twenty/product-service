@@ -2,7 +2,6 @@ package br.group.twenty.challenge.product.api.configs;
 
 import br.group.twenty.challenge.product.core.exceptions.ResourceNotFoundException
 import br.group.twenty.challenge.product.core.entities.ErrorResponse
-import br.group.twenty.challenge.product.core.exceptions.ResourceBusinessException
 import br.group.twenty.challenge.product.infrastructure.exceptions.ResourceBadRequestException
 import br.group.twenty.challenge.product.infrastructure.exceptions.ResourceInternalServerException
 import org.springframework.http.HttpStatus
@@ -18,12 +17,6 @@ class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     fun handleResourceNotFoundException(ex: ResourceNotFoundException): ResponseEntity<ErrorResponse> {
         return ResponseEntity(ex.formatter(), HttpStatus.NOT_FOUND)
-    }
-
-    @ExceptionHandler(ResourceBusinessException::class)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
-    fun handleResourceBusinessException(ex: ResourceBusinessException): ResponseEntity<ErrorResponse> {
-        return ResponseEntity(ex.formatter(), HttpStatus.UNPROCESSABLE_ENTITY)
     }
 
     @ExceptionHandler(ResourceBadRequestException::class)

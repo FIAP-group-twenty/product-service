@@ -45,6 +45,8 @@ class ProductGateway(private val productDataSource: IProductDataSource) : IProdu
                 return product.toDto()
             }
             throw ResourceNotFoundException("Product not found")
+        } catch (ex: ResourceNotFoundException) {
+            throw ex
         } catch (ex: Exception) {
             throw ResourceInternalServerException("Failed to find product with id: $id", ex)
         }
