@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
-    id("org.sonarqube") version "3.3"
+    id("org.sonarqube") version "5.1.0.4882"
     id("jacoco")
 }
 
@@ -60,11 +60,11 @@ sonarqube {
     properties {
         property("sonar.projectKey", "product-service")
         property("sonar.host.url", "http://localhost:9000") // URL do seu servidor SonarQube
-        property("sonar.login", "seu-token") // Token gerado no SonarQube
+        property("sonar.login", "sqp_ff8ce4fa94e5c3b0a66e21dce5b9fa9f0e756be2") // Token gerado no SonarQube
         property("sonar.kotlin.language.level", "1.9") // Versão do Kotlin
         property("sonar.sources", "src/main/kotlin") // Diretório de fontes
         property("sonar.tests", "src/test/kotlin") // Diretório de testes
-        property("sonar.junit.reportsPath", "$buildDir/test-logs") // Caminho dos relatórios de teste
+        property("sonar.junit.reportsPath", "/Users/moraes/IdeaProjects/product-service/build/test-logs") // Caminho dos relatórios de teste
     }
 }
 
@@ -86,9 +86,11 @@ tasks.test {
         events("passed", "failed", "skipped")
     }
     reports {
-        junitXml.setDestination(file("${project.buildDir}/test-results/test"))
-//        junitXml.configure.ema
-        // Defina o destino corretamente
+        junitXml.required.set(true)
+        junitXml.outputLocation.set(file("/Users/moraes/IdeaProjects/product-service/build/test-results/test"))
+        junitXml.setDestination(file("/Users/moraes/IdeaProjects/product-service/build/test-results/test"))
+        html.required.set(true)
+        html.outputLocation.set(file("/Users/moraes/IdeaProjects/product-service/build/test-results/test"))
     }
 }
 
@@ -96,6 +98,6 @@ tasks.jacocoTestReport {
     reports {
         xml.required.set(true)
         html.required.set(true)
-        html.outputLocation.set(file("${project.buildDir}/reports/jacoco"))
+        html.outputLocation.set(file("/Users/moraes/IdeaProjects/product-service/build/reports/jacoco"))
     }
 }
