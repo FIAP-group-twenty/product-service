@@ -58,13 +58,13 @@ dependencies {
 
 sonarqube {
     properties {
-        property("sonar.projectKey", "product-service")
-        property("sonar.host.url", "http://localhost:9000") // URL do seu servidor SonarQube
-        property("sonar.login", "sqp_ff8ce4fa94e5c3b0a66e21dce5b9fa9f0e756be2") // Token gerado no SonarQube
-        property("sonar.kotlin.language.level", "1.9") // Versão do Kotlin
-        property("sonar.sources", "src/main/kotlin") // Diretório de fontes
-        property("sonar.tests", "src/test/kotlin") // Diretório de testes
-        property("sonar.junit.reportsPath", "/Users/moraes/IdeaProjects/product-service/build/test-logs") // Caminho dos relatórios de teste
+        property("sonar.projectKey", project.name)
+        property("sonar.host.url", project.findProperty("SONAR_URL") ?: "")
+        property("sonar.login", project.findProperty("SONAR_KEY") ?: "")
+        property("sonar.kotlin.language.level", "1.9")
+        property("sonar.sources", "src/main/kotlin")
+        property("sonar.tests", "src/test/kotlin")
+        property("sonar.junit.reportsPath", "${project.projectDir}/test-logs")
     }
 }
 
@@ -81,16 +81,17 @@ tasks.withType<Test> {
 
 tasks.test {
     finalizedBy(tasks.jacocoTestReport)
-    useJUnitPlatform()  // Para usar JUnit 5 (caso esteja utilizando)
+    useJUnitPlatform()
     testLogging {
         events("passed", "failed", "skipped")
     }
     reports {
         junitXml.required.set(true)
-        junitXml.outputLocation.set(file("/Users/moraes/IdeaProjects/product-service/build/test-results/test"))
-        junitXml.setDestination(file("/Users/moraes/IdeaProjects/product-service/build/test-results/test"))
+        junitXml.outputLocation.set(file("${project.projectDir}/test-results/test"))
+        junitXml.setDestination(file("${project.projectDir}/test-results/test"))
         html.required.set(true)
-        html.outputLocation.set(file("/Users/moraes/IdeaProjects/product-service/build/test-results/test"))
+        html.outputLocation.set(file("${project.projectDir}/test-results/test"))
+
     }
 }
 
@@ -98,6 +99,6 @@ tasks.jacocoTestReport {
     reports {
         xml.required.set(true)
         html.required.set(true)
-        html.outputLocation.set(file("/Users/moraes/IdeaProjects/product-service/build/reports/jacoco"))
+        html.outputLocation.set(file("${project.projectDir}/reports/jacoco"))
     }
 }
