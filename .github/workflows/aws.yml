@@ -57,5 +57,3 @@ jobs:
       - name: Atualizar deployment no EKS
         run: |
           kubectl set image deployment/challenge challenge=${{ secrets.DOCKER_IMAGE }}:latest
-          
-          //
