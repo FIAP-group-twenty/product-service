@@ -59,8 +59,8 @@ dependencies {
 sonarqube {
     properties {
         property("sonar.projectKey", project.name)
-        property("sonar.host.url", project.findProperty("SONAR_URL") ?: "")
-        property("sonar.login", project.findProperty("SONAR_KEY") ?: "")
+        property("sonar.host.url", project.findProperty("SONAR_HOST_URL") ?: "")
+        property("sonar.login", project.findProperty("SONAR_TOKEN") ?: "")
         property("sonar.kotlin.language.level", "1.9")
         property("sonar.sources", "src/main/kotlin")
         property("sonar.tests", "src/test/kotlin")
