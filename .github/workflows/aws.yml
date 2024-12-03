@@ -1,6 +1,9 @@
 name: CI/CD Pipeline
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -48,6 +51,7 @@ jobs:
   build:
     needs: sonarQube
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
 
     steps:
       - name: Checkout do código
@@ -77,6 +81,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
 
     steps:
       - name: Instalar AWS CLI
