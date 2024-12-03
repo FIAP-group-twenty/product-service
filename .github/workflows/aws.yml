@@ -38,14 +38,16 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew sonar --stacktrace
 
-      - name: Check Quality Gate status
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Validate test coverage
         run: |
-          echo "Checking SonarQube Quality Gate status..."
-          curl -s -u $SONAR_TOKEN: "$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=product-service" | \
-          jq -e '.projectStatus.status == "OK"' || exit 1
+          coverage=$(curl -s "https://sonarcloud.io/api/project_badges/measure?project=group-twenty_produc-service&metric=coverage" | jq -r '.value')
+          echo "Test coverage: $coverage"
+      
+          if (( $(echo "$coverage >= 80" | bc -l) )); then
+          echo "Test coverage is sufficient: $coverage%"
+          else
+          echo "Test coverage is below 80%: $coverage%"
+          exit 1
 
   build:
     needs: sonarQube

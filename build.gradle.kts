@@ -63,6 +63,9 @@ sonar {
         property ("sonar.organization", "group-twenty")
         property ("sonar.host.url", "https://sonarcloud.io")
         property("sonar.login", project.findProperty("SONAR_TOKEN") ?: "")
+        property("sonar.kotlin.language.level", "1.9")
+        property("sonar.sources", "src/main/kotlin")
+        property("sonar.tests", "src/test/kotlin")
     }
 }
 
