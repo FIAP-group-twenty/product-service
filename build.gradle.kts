@@ -56,7 +56,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa")
 }
 
-sonarqube {
+sonar {
     properties {
         property("sonar.projectKey", project.name)
         property("sonar.host.url", project.findProperty("SONAR_HOST_URL") ?: "")

@@ -2,13 +2,14 @@ package infrastructure.gateways
 
 import br.group.twenty.challenge.product.core.entities.Product
 import br.group.twenty.challenge.product.core.exceptions.ResourceNotFoundException
-import br.group.twenty.challenge.product.infrastructure.exceptions.ResourceInternalServerException
 import br.group.twenty.challenge.product.infrastructure.gateways.ProductGateway
 import br.group.twenty.challenge.product.infrastructure.persistence.entities.ProductEntity
 import br.group.twenty.challenge.product.infrastructure.persistence.jpa.IProductDataSource
 import io.mockk.*
-import org.junit.jupiter.api.*
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.math.BigDecimal
 
 class ProductGatewayTest {
