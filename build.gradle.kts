@@ -6,7 +6,7 @@ plugins {
     kotlin("jvm") version "1.9.23"
     kotlin("plugin.spring") version "1.9.23"
     kotlin("plugin.jpa") version "1.9.23"
-    id("org.sonarqube") version "5.1.0.4882"
+    id("org.sonarqube") version "6.0.1.5171"
     id("jacoco")
 }
 
@@ -58,13 +58,11 @@ dependencies {
 
 sonar {
     properties {
-        property("sonar.projectKey", project.name)
-        property("sonar.host.url", project.findProperty("SONAR_HOST_URL") ?: "")
+
+        property ("sonar.projectKey", "group-twenty_produc-service")
+        property ("sonar.organization", "group-twenty")
+        property ("sonar.host.url", "https://sonarcloud.io")
         property("sonar.login", project.findProperty("SONAR_TOKEN") ?: "")
-        property("sonar.kotlin.language.level", "1.9")
-        property("sonar.sources", "src/main/kotlin")
-        property("sonar.tests", "src/test/kotlin")
-        property("sonar.junit.reportsPath", "${project.projectDir}/test-logs")
     }
 }
 

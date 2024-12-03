@@ -2,6 +2,7 @@ package infrastructure.gateways
 
 import br.group.twenty.challenge.product.core.entities.Product
 import br.group.twenty.challenge.product.core.exceptions.ResourceNotFoundException
+import br.group.twenty.challenge.product.infrastructure.exceptions.ResourceInternalServerException
 import br.group.twenty.challenge.product.infrastructure.gateways.ProductGateway
 import br.group.twenty.challenge.product.infrastructure.persistence.entities.ProductEntity
 import br.group.twenty.challenge.product.infrastructure.persistence.jpa.IProductDataSource
@@ -43,17 +44,17 @@ class ProductGatewayTest {
         verify(exactly = 1) { productDataSource.save(any<ProductEntity>()) }
     }
 
-//    @Test
-//    fun `createProduct should throw ResourceInternalServerException on failure`() {
-//        every { productDataSource.save(any<ProductEntity>()) } throws RuntimeException("DB error")
-//
-//        val exception = assertThrows<ResourceInternalServerException> {
-//            productGateway.createProduct(product)
-//        }
-//
-//        assertTrue(exception.message?.contains("Failed to create product") == true)
-//        verify(exactly = 1) { productDataSource.save(any<ProductEntity>()) }
-//    }
+    @Test
+    fun `createProduct should throw ResourceInternalServerException on failure`() {
+        every { productDataSource.save(any<ProductEntity>()) } throws RuntimeException("DB error")
+
+        val exception = assertThrows<ResourceInternalServerException> {
+            productGateway.createProduct(product)
+        }
+
+        assertTrue(exception.message?.contains("Failed to create product") == true)
+        verify(exactly = 1) { productDataSource.save(any<ProductEntity>()) }
+    }
 
     @Test
     fun `deleteProduct should delete product successfully`() {
@@ -65,17 +66,17 @@ class ProductGatewayTest {
         verify(exactly = 1) { productDataSource.delete(any<ProductEntity>()) }
     }
 
-//    @Test
-//    fun `deleteProduct should throw ResourceInternalServerException on failure`() {
-//        every { productDataSource.delete(any<ProductEntity>()) } throws RuntimeException("DB error")
-//
-//        val exception = assertThrows<ResourceInternalServerException> {
-//            productGateway.deleteProduct(product)
-//        }
-//
-//        assertTrue(exception.message?.contains("Failed to delete product") == true)
-//        verify(exactly = 1) { productDataSource.delete(any<ProductEntity>()) }
-//    }
+    @Test
+    fun `deleteProduct should throw ResourceInternalServerException on failure`() {
+        every { productDataSource.delete(any<ProductEntity>()) } throws RuntimeException("DB error")
+
+        val exception = assertThrows<ResourceInternalServerException> {
+            productGateway.deleteProduct(product)
+        }
+
+        assertTrue(exception.message?.contains("Failed to delete product") == true)
+        verify(exactly = 1) { productDataSource.delete(any<ProductEntity>()) }
+    }
 
     @Test
     fun `findProductById should return product when found`() {
@@ -110,17 +111,17 @@ class ProductGatewayTest {
         verify(exactly = 1) { productDataSource.findByCategory("Sample Category") }
     }
 
-//    @Test
-//    fun `findProductByCategory should throw ResourceInternalServerException on failure`() {
-//        every { productDataSource.findByCategory("Sample Category") } throws RuntimeException("DB error")
-//
-//        val exception = assertThrows<ResourceInternalServerException> {
-//            productGateway.findProductByCategory("Sample Category")
-//        }
-//
-//        assertTrue(exception.message?.contains("Failed to find product with category") == true)
-//        verify(exactly = 1) { productDataSource.findByCategory("Sample Category") }
-//    }
+    @Test
+    fun `findProductByCategory should throw ResourceInternalServerException on failure`() {
+        every { productDataSource.findByCategory("Sample Category") } throws RuntimeException("DB error")
+
+        val exception = assertThrows<ResourceInternalServerException> {
+            productGateway.findProductByCategory("Sample Category")
+        }
+
+        assertTrue(exception.message?.contains("Failed to find product with category") == true)
+        verify(exactly = 1) { productDataSource.findByCategory("Sample Category") }
+    }
 
     @Test
     fun `updateProduct should update and return updated product`() {
@@ -134,16 +135,16 @@ class ProductGatewayTest {
         verify(exactly = 1) { productDataSource.save(any<ProductEntity>()) }
     }
 
-//    @Test
-//    fun `updateProduct should throw ResourceInternalServerException on failure`() {
-//        every { productDataSource.save(any<ProductEntity>()) } throws RuntimeException("DB error")
-//
-//        val exception = assertThrows<ResourceInternalServerException> {
-//            productGateway.updateProduct(product, product)
-//        }
-//
-//        assertTrue(exception.message?.contains("Failed to update product") == true)
-//        verify(exactly = 1) { productDataSource.save(any<ProductEntity>()) }
-//    }
+    @Test
+    fun `updateProduct should throw ResourceInternalServerException on failure`() {
+        every { productDataSource.save(any<ProductEntity>()) } throws RuntimeException("DB error")
+
+        val exception = assertThrows<ResourceInternalServerException> {
+            productGateway.updateProduct(product, product)
+        }
+
+        assertTrue(exception.message?.contains("Failed to update product") == true)
+        verify(exactly = 1) { productDataSource.save(any<ProductEntity>()) }
+    }
 
 }
