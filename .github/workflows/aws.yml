@@ -36,7 +36,7 @@ jobs:
       - name: Run SonarQube analysis
         run: ./gradlew sonar \
           -Dsonar.projectKey=product-service \
-          -Dsonar.projectName='product-service' \
+          -Dsonar.projectName=product-service \
           -Dsonar.host.url=http://localhost:9000 \
           -Dsonar.token=${{ secrets.SONAR_TOKEN }} \
           --stacktrace
