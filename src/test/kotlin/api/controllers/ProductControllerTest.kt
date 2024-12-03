@@ -1,10 +1,7 @@
 import br.group.twenty.challenge.product.api.controllers.ProductController
 import br.group.twenty.challenge.product.core.entities.Product
 import br.group.twenty.challenge.product.core.exceptions.ResourceNotFoundException
-import br.group.twenty.challenge.product.core.usecases.CreateProductUseCase
-import br.group.twenty.challenge.product.core.usecases.DeleteProductUseCase
-import br.group.twenty.challenge.product.core.usecases.GetProductByCategoryUseCase
-import br.group.twenty.challenge.product.core.usecases.UpdateProductUseCase
+import br.group.twenty.challenge.product.core.usecases.*
 import br.group.twenty.challenge.product.infrastructure.exceptions.ResourceBadRequestException
 import io.mockk.every
 import io.mockk.mockk
@@ -21,9 +18,10 @@ class ProductControllerTest {
     private val getProductByCategoryUseCase: GetProductByCategoryUseCase = mockk()
     private val updateProductUseCase: UpdateProductUseCase = mockk()
     private val deleteProductUseCase: DeleteProductUseCase = mockk()
+    private val getProductByIdUseCase: GetProductByIdUseCase = mockk()
 
     private val productController = ProductController(
-        createProductUseCase, getProductByCategoryUseCase, updateProductUseCase, deleteProductUseCase
+        createProductUseCase, getProductByCategoryUseCase, updateProductUseCase, deleteProductUseCase, getProductByIdUseCase
     )
 
     @Test

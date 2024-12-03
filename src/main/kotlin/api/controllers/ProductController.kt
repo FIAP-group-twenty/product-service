@@ -2,10 +2,7 @@ package br.group.twenty.challenge.product.api.controllers
 
 import br.group.twenty.challenge.product.core.entities.Product
 import br.group.twenty.challenge.product.core.exceptions.ResourceNotFoundException
-import br.group.twenty.challenge.product.core.usecases.CreateProductUseCase
-import br.group.twenty.challenge.product.core.usecases.DeleteProductUseCase
-import br.group.twenty.challenge.product.core.usecases.GetProductByCategoryUseCase
-import br.group.twenty.challenge.product.core.usecases.UpdateProductUseCase
+import br.group.twenty.challenge.product.core.usecases.*
 import br.group.twenty.challenge.product.infrastructure.exceptions.ResourceBadRequestException
 import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.CREATED
@@ -18,7 +15,8 @@ class ProductController(
     private val createProductUseCase: CreateProductUseCase,
     private val getProductByCategoryUseCase: GetProductByCategoryUseCase,
     private val updateProductUseCase: UpdateProductUseCase,
-    private val deleteProductUseCase: DeleteProductUseCase
+    private val deleteProductUseCase: DeleteProductUseCase,
+    private val getProductByIdUseCase: GetProductByIdUseCase
 ) {
 
     @PostMapping
@@ -48,6 +46,11 @@ class ProductController(
     @DeleteMapping("/{id}")
     fun deleteProduct(@PathVariable id: Int): ResponseEntity<Any> {
         return ResponseEntity.ok().body(deleteProductUseCase.execute(id))
+    }
+
+    @GetMapping("/{id}")
+    fun getProductById(@PathVariable id: Int): ResponseEntity<Any> {
+        return ResponseEntity.ok(getProductByIdUseCase.execute(id))
     }
 
 }
