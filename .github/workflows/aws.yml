@@ -37,7 +37,12 @@ jobs:
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew sonar
+        run: |
+          ./gradlew sonar \
+            -Dsonar.projectKey=product-service \
+            -Dsonar.projectName='product-service' \
+            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
 
       - name: Check Quality Gate status
         env:
