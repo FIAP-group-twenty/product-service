@@ -1,6 +1,9 @@
 name: CI/CD Pipeline
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
@@ -32,16 +35,28 @@ jobs:
 
       - name: Run SonarQube analysis
         env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew sonarqube --no-daemon
+        run: ./gradlew sonar
+
+      - name: Validate test coverage
+        run: |
+          coverage=$(curl -s "https://sonarcloud.io/api/measures/component?componentKey=group-twenty_produc-service&metricKeys=coverage" | jq -r '.component.measures[0].value')
+          echo "Test coverage: $coverage"
+          if (( $(echo "$coverage >= 80" | bc -l) )); then
+          echo "Test coverage is sufficient: $coverage%"
+          else
+          echo "Test coverage is below 80%: $coverage%"
+          exit 1
+          fi
 
   build:
+    needs: sonarQube
     runs-on: ubuntu-latest
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
 
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Remover pacotes conflitantes
         run: |
@@ -67,6 +82,7 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
 
     steps:
       - name: Instalar AWS CLI
@@ -86,4 +102,4 @@ jobs:
 
       - name: Atualizar deployment no EKS
         run: |
-          kubectl set image deployment/product product=${{ secrets.DOCKER_IMAGE }}:latest
+          kubectl set image deployment/product-service product-service=${{ secrets.DOCKER_IMAGE }}:latest
