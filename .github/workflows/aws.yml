@@ -40,7 +40,7 @@ jobs:
 
       - name: Validate test coverage
         run: |
-          coverage=$(curl -s "https://sonarcloud.io/api/project_badges/measure?project=group-twenty_produc-service&metric=coverage" | jq -r '.value')
+          coverage=$(curl -s "https://sonarcloud.io/api/measures/component?componentKey=group-twenty_produc-service&metricKeys=coverage" | jq '.component.measures[0].value')
           echo "Test coverage: $coverage"
       
           if (( $(echo "$coverage >= 80" | bc -l) )); then
