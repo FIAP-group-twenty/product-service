@@ -36,12 +36,22 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew sonarqube --no-daemon
 
+      - name: Check Quality Gate status
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          echo "Checking SonarQube Quality Gate status..."
+          curl -s -u $SONAR_TOKEN: "$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=product-service" | \
+          jq -e '.projectStatus.status == "OK"' || exit 1
+
   build:
+    needs: sonarQube
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout do código
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Remover pacotes conflitantes
         run: |
@@ -86,4 +96,4 @@ jobs:
 
       - name: Atualizar deployment no EKS
         run: |
-          kubectl set image deployment/product product=${{ secrets.DOCKER_IMAGE }}:latest
+          kubectl set image deployment/product-service product-service=${{ secrets.DOCKER_IMAGE }}:latest
