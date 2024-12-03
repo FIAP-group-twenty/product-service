@@ -34,15 +34,12 @@ jobs:
         run: ./gradlew build --no-daemon
 
       - name: Run SonarQube analysis
-        env:
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           ./gradlew sonar \
             -Dsonar.projectKey=product-service \
             -Dsonar.projectName='product-service' \
-            -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
-            -Dsonar.token=${{ secrets.SONAR_TOKEN }}
+            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.token=sqp_ff8ce4fa94e5c3b0a66e21dce5b9fa9f0e756be2
 
       - name: Check Quality Gate status
         env:
