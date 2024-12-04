@@ -1,9 +1,6 @@
 package br.group.twenty.challenge.product.api.configs
 
-import br.group.twenty.challenge.product.core.usecases.CreateProductUseCase
-import br.group.twenty.challenge.product.core.usecases.DeleteProductUseCase
-import br.group.twenty.challenge.product.core.usecases.GetProductByCategoryUseCase
-import br.group.twenty.challenge.product.core.usecases.UpdateProductUseCase
+import br.group.twenty.challenge.product.core.usecases.*
 import br.group.twenty.challenge.product.infrastructure.gateways.ProductGateway
 import br.group.twenty.challenge.product.infrastructure.persistence.jpa.IProductDataSource
 import org.springframework.context.annotation.Bean
@@ -37,6 +34,11 @@ class BeanConfiguration(
     @Bean
     fun updateProductUseCase(): UpdateProductUseCase {
         return UpdateProductUseCase(productGateway())
+    }
+
+    @Bean
+    fun getProductByIdUseCase(): GetProductsByIdUseCase {
+        return GetProductsByIdUseCase(productGateway())
     }
 
 }
