@@ -37,8 +37,8 @@ class BeanConfiguration(
     }
 
     @Bean
-    fun getProductByIdUseCase(): GetProductsByIdUseCase {
-        return GetProductsByIdUseCase(productGateway())
+    fun getProductByIdUseCase(): GetProductByIdUseCase {
+        return GetProductByIdUseCase(productGateway())
     }
 
 }
