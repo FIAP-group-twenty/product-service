@@ -69,7 +69,7 @@ jobs:
 
       - name: Build da imagem Docker
         run: |
-          docker build -t ${{ secrets.DOCKER_IMAGE }} .
+          docker build -t ${{ secrets.DOCKER_IMAGE }}:${{ github.sha }} .
 
       - name: Login no Docker Hub
         run: |
@@ -102,4 +102,4 @@ jobs:
 
       - name: Atualizar deployment no EKS
         run: |
-          kubectl set image deployment/product-service product-service=${{ secrets.DOCKER_IMAGE }}:latest
+          kubectl set image deployment/product-service product-service=${{ secrets.DOCKER_IMAGE }}:${{ github.sha }}
