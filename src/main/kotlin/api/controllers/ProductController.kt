@@ -48,7 +48,7 @@ class ProductController(
         return ResponseEntity.ok().body(deleteProductUseCase.execute(id))
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/find/{id}")
     fun getProductById(@PathVariable id: Int): ResponseEntity<Any> {
         return ResponseEntity.ok(getProductByIdUseCase.execute(id))
     }
