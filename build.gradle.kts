@@ -54,6 +54,14 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.10.0")
     testImplementation("com.h2database:h2")
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    testImplementation("io.cucumber:cucumber-java:7.14.0")
+    testImplementation("io.cucumber:cucumber-spring:7.14.0")
+    testImplementation("io.cucumber:cucumber-junit:7.14.0")
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("org.junit.platform:junit-platform-suite-api")
+    testRuntimeOnly("org.junit.platform:junit-platform-suite-engine")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:7.14.0")
 }
 
 sonarqube {
